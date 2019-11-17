@@ -2,7 +2,7 @@
 require_once "sql/_common.sql.php";
 
 function _getHighwayColSql() {
-	return "(CASE WHEN highway='construction' THEN construction ELSE highway END)";
+	return "(CASE WHEN highway='construction' THEN construction WHEN highway='proposed' THEN proposed ELSE highway END)";
 }
 
 function _getHighwayGradeSql($forceHighwayCol = false) {
@@ -173,7 +173,7 @@ return <<<EOD
 	    is_tunnel,
 		    COALESCE(junction,CAST('no' AS text)) AS				
 	    junction,
-		    (CASE WHEN highway = 'construction' THEN CAST('yes' AS text) ELSE CAST('no' AS text) END) AS
+		    CAST('no' AS text) AS
 	    is_construction,
 	    $layerSql AS layer,
 	    osm_id,	  
